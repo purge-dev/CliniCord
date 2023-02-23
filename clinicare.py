@@ -1,4 +1,4 @@
-from interactions import Client, CommandContext, ComponentContext, Embed, SelectOption, SelectMenu, Emoji
+from interactions import Client, CommandContext, ComponentContext, Embed, SelectOption, SelectMenu, Emoji, ClientPresence, PresenceActivity, PresenceActivityType
 from interactions.ext.wait_for import setup
 import asyncio
 
@@ -8,6 +8,7 @@ setup(client)
 @client.event
 async def on_ready():
     print(f"{client.me.name} successfully connected at {round(client.latency)} ms.")
+
 
 questions  = [
     {"question": "Sadness", "options": ["I do not feel sad.", "I feel sad much of the time.", "I am sad all the time.", "I am so sad or unhappy that I can't stand it."]},
