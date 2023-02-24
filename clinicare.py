@@ -2,7 +2,10 @@ from interactions import Client, CommandContext, ComponentContext, Embed, Select
 from interactions.ext.wait_for import setup
 import asyncio
 
-client = Client(token="MTA3Nzk0OTkzMjUyNDI5MDExMA.Gn8ssT.2CEA2ePk2L6T6zBJxJJv9W5ZnZB6rdmPnZ2p9M")
+with open("pw.txt", "r") as file:
+    text = file.read()
+
+client = Client(token=text)
 setup(client)
 
 @client.event
