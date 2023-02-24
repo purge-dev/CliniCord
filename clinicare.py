@@ -1,4 +1,4 @@
-from interactions import Client, CommandContext, ComponentContext, Embed, SelectOption, SelectMenu, Emoji, ClientPresence, PresenceActivity, PresenceActivityType
+from interactions import Client, CommandContext, ComponentContext, Embed, SelectOption, SelectMenu, Emoji, ClientPresence, PresenceActivity, PresenceActivityType, StatusType
 from interactions.ext.wait_for import setup
 import asyncio
 
@@ -8,7 +8,7 @@ setup(client)
 @client.event
 async def on_ready():
     print(f"{client.me.name} successfully connected at {round(client.latency)} ms.")
-
+    await client.change_presence(presence=ClientPresence(status=StatusType.ONLINE, activities=[PresenceActivity(name="Your Health!", type=PresenceActivityType.WATCHING, created_at=1677187200000)], afk=False))
 
 questions  = [
     {"question": "Sadness", "options": ["I do not feel sad.", "I feel sad much of the time.", "I am sad all the time.", "I am so sad or unhappy that I can't stand it."]},
@@ -34,7 +34,7 @@ questions  = [
     {"question": "Loss of interest in sex", "options": ["I have not noticed any recent change in my interest in sex.", "I am less interested in sex than I used to be.", "I have lost interest in sex completely.", "I find sex completely unappealing."]}
     ]
 
-@client.command(name="depression", description='Evaluates whether you are suffering from clinical depression using the validated BDI questionnaire.')
+@client.command(name="depression", description='Evaluates whether you are suffering from clinical depression.')
 async def depression(ctx: CommandContext):
     score = 0
 
@@ -44,8 +44,8 @@ async def depression(ctx: CommandContext):
     pic2.name = "🙁"
     pic3.name = "😢"
 
-    embed = Embed(title="🧠 CliniCare: Mind", description=f"Hey, <@{ctx.author.id}>, tell me how you currently feel.", color=0xFFFFFF)
-    embed.set_thumbnail(url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNFMDb6nEd906vJEn6xg62TOtwIVHvBDGK2Q&usqp=CAU")
+    embed = Embed(title="🧠 CliniCord: Mind", description=f"Hey, <@{ctx.author.id}>, tell me how you currently feel.", color=0xFFFFFF)
+    embed.set_thumbnail(url="https://raw.githubusercontent.com/purge-dev/clinicare/main/assets/consult.gif")
 
     for i, question in enumerate(questions): # cycle through each question and make a menu for each
         selection = [SelectOption(
@@ -56,9 +56,10 @@ async def depression(ctx: CommandContext):
             label=question['options'][2], value="2", emoji=pic2),
             SelectOption(
             label=question['options'][3], value="3", emoji=pic3)]
+        
         embed.set_footer(f"Question {i+1} of 21.")
-        menu = SelectMenu(placeholder="Choose a statement", custom_id=str(i), options=selection)   
 
+        menu = SelectMenu(placeholder="Choose a statement", custom_id=str(i), options=selection)   
         await ctx.send(embeds=embed, components=menu, ephemeral=True)
 
         async def check(res: ComponentContext):
@@ -66,13 +67,12 @@ async def depression(ctx: CommandContext):
                 return True
 
         try:
-            res: ComponentContext = await client.wait_for_component(components=menu, check=check, timeout=60)
-            await ctx.delete() # remove message so it can display the next one
-           # await res.send(f"You chose: {str(res.data.values[0])}", ephemeral=True)
-            score += int(res.data.values[0])
+            res: ComponentContext = await client.wait_for_component(components=menu, check=check, timeout=60) # check for the user's response in context
+            await ctx.delete() # remove question so it can display the next one
+            score += int(res.data.values[0]) # add the value of the user's choice into the total score
     
         except asyncio.TimeoutError:
-            await ctx.delete() # remove the message if user takes too long
+            await ctx.delete() # remove the entire message if user takes too long
             await ctx.send(f"You took too long to respond! Please try again.", ephemeral=True)
             return       
 
