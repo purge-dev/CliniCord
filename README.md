@@ -1,4 +1,5 @@
 # CliniCord [![GitHub stars](https://img.shields.io/github/stars/purge-dev/clinicord)](https://github.com/purge-dev/CliniCord/stargazers) [![GitHub issues](https://img.shields.io/github/issues/purge-dev/clinicord)](https://github.com/purge-dev/CliniCord/issues)
+![CliniCord](https://raw.githubusercontent.com/purge-dev/CliniCord/main/assets/about.png)
 
 ## Features
 
