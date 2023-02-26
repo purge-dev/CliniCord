@@ -1,5 +1,5 @@
 # 🧠 CliniCord  [![CodeFactor](https://www.codefactor.io/repository/github/purge-dev/clinicord/badge)](https://www.codefactor.io/repository/github/purge-dev/clinicord) 
-[![Discord](https://img.shields.io/discord/658113349384667198.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2)](https://discord.gg/r4wWd3wGBN) [![GitHub stars](https://img.shields.io/github/stars/purge-dev/clinicord)](https://github.com/purge-dev/CliniCord/stargazers) [![GitHub issues](https://img.shields.io/github/issues/purge-dev/clinicord)](https://github.com/purge-dev/CliniCord/issues)
+[![Discord](https://img.shields.io/discord/1078598603611852881.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2)](https://discord.gg/r4wWd3wGBN) [![GitHub stars](https://img.shields.io/github/stars/purge-dev/clinicord)](https://github.com/purge-dev/CliniCord/stargazers) [![GitHub issues](https://img.shields.io/github/issues/purge-dev/clinicord)](https://github.com/purge-dev/CliniCord/issues)
 
 ![CliniCord](https://raw.githubusercontent.com/purge-dev/CliniCord/main/assets/about.png)
 
