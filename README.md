@@ -18,7 +18,8 @@ This bot is completely non-profit and free-to-use.
   * Salt consumption tracking with graphic modelling tool to visually explain risks to cardiovascular health using [meta-analysis](https://www.bmj.com/content/346/bmj.f1325) data
   * Sugar consumption tracking and risk modelling
   
-## ⌨ Usage
+## ⚙ Usage
+<a href="https://discord.com/oauth2/authorize?client_id=1077949932524290110&permissions=2147534848&scope=bot"><img src="https://img.shields.io/static/v1?label=Invite%20Me&message=CliniCord%232260&plastic&color=5865F2&logo=discord"></a>
 
 CliniCord is currently under active development and may be unstable. Please report any bugs [here](https://github.com/purge-dev/CliniCord/issues).
 
