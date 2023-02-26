@@ -5,12 +5,10 @@
 
 ## 💻 Current Features
 
-CliniCord is a Discord bot written using the [interactions-py](https://github.com/interactions-py/interactions.py) library that provides validated health and risk assessments for Discord users concerned about their health.
+CliniCord is a Discord bot written using the [interactions-py](https://github.com/interactions-py/interactions.py) library that provides validated health and risk assessments for Discord users concerned about their health. This bot is completely non-profit and free-to-use.
 
 ### Commands
 * `/depression` assess if a user is suffering from clinical depression via [Beck's Depression Inventory](https://www.apa.org/pi/about/publications/caregivers/practice-settings/assessment/tools/beck-depression)
-
-This bot is completely non-profit and free-to-use.
 
 ## 📬 Coming Soon
 * ### Mental Health
