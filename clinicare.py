@@ -1,12 +1,10 @@
 from interactions import Client, CommandContext, ComponentContext, Embed, SelectOption, SelectMenu, Emoji, ClientPresence, PresenceActivity, PresenceActivityType, StatusType
-from interactions.ext.wait_for import setup
 import asyncio
 
 with open("pw.txt", "r") as file:
     text = file.read()
 
 client = Client(token=text)
-setup(client)
 
 @client.event
 async def on_ready():
@@ -40,12 +38,10 @@ questions  = [
 @client.command(name="depression", description='Evaluates whether you are suffering from clinical depression.')
 async def depression(ctx: CommandContext):
     score = 0
-
-    pic0, pic1, pic2, pic3 = Emoji(), Emoji(), Emoji(), Emoji() # fix this mess
-    pic0.name = "🙂" 
-    pic1.name = "😕"
-    pic2.name = "🙁"
-    pic3.name = "😢"
+    pic0 = Emoji(name="🙂")
+    pic1 = Emoji(name="😕")
+    pic2 = Emoji(name="🙁")
+    pic3 = Emoji(name="😢")
 
     embed = Embed(title="🧠 CliniCord: Mind", description=f"Hey, <@{ctx.author.id}>, tell me how you currently feel.", color=0xFFFFFF)
     embed.set_thumbnail(url="https://raw.githubusercontent.com/purge-dev/clinicare/main/assets/consult.gif")
@@ -79,48 +75,31 @@ async def depression(ctx: CommandContext):
             await ctx.send(f"You took too long to respond! Please try again.", ephemeral=True)
             return       
 
-    # clean this into a function and add buttons for treatment/SOS/support lines
-    if (score <= 10):
-        embed.description = "Your responses suggest **normal** levels of stress. Ups and downs happen in life and shape who we are for the better. Keep going strong!"
-        embed.set_thumbnail("https://raw.githubusercontent.com/purge-dev/clinicare/main/assets/normal.png")
-        embed.color = 0x00FF00
-        embed.set_footer("⚠ Consult your doctor if your symptoms worsen.")
-        await ctx.send(embeds=embed, ephemeral=True)
+    async def depression_res(score: int):
+        score_ranges = [
+            (0, 10, "**normal** levels of stress. Ups and downs happen in life and shape who we are for the better. Keep going strong!", "https://raw.githubusercontent.com/purge-dev/clinicare/main/assets/normal.png", 0x00FF00),
+            (11, 16, "**mild** levels of mood disturbance.", "https://raw.githubusercontent.com/purge-dev/clinicare/main/assets/moody.png", 0xFFFF00),
+            (17, 20, "**borderline clinical depression**. Consider making an appointment with your doctor to discuss ways going forward.",
+             "https://raw.githubusercontent.com/purge-dev/clinicare/main/assets/moody.png", 0xFFA500),
+            (21, 30, "**moderate clinical depression**. Consult a mental health professional soon to discuss ways going forward.",
+             "https://raw.githubusercontent.com/purge-dev/clinicare/main/assets/borderline.png", 0xFF8C00),
+            (31, 40, "**severe clinical depression**. Consult a doctor or mental health professional soon to discuss ways going forward.",
+             "https://raw.githubusercontent.com/purge-dev/clinicare/main/assets/severe.png", 0xFF0000),
+            (41, 63, "**extreme clinical depression**. Please visit an urgent care mental health clinic as this is likely impacting your overall health.",
+             "https://raw.githubusercontent.com/purge-dev/clinicare/main/assets/severe.png", 0x8B0000)
+        ]
 
-    elif (score >= 11 and score <= 16):
-        embed.description = "Your responses suggest **mild** levels of mood disturbance."
-        embed.set_thumbnail("https://raw.githubusercontent.com/purge-dev/clinicare/main/assets/moody.png")
-        embed.color = 0xFFFF00
-        embed.set_footer("⚠ Consult your doctor if your symptoms worsen.")
-        await ctx.send(embeds=embed, ephemeral=True)
+        for range_min, range_max, description, thumbnail, color in score_ranges:  # add buttons for treatment/SOS/support lines
+            if range_min <= score <= range_max:
+                embed = Embed(title="🧠 CliniCord: Mind", description=f"Your responses suggest {description}", color=color)
+                embed.set_thumbnail(url=thumbnail)
+                embed.set_footer("⚠ Consult your doctor if your symptoms worsen.")
+                if score >= 31:
+                    embed.set_footer("⚠ Visit the ER if you are considering self-harm or worse.")
 
-    elif (score >= 17 and score <= 20):
-        embed.description = "Your responses suggest **borderline clinical depression**. Consider making an appointment with your doctor to discuss ways going forward."
-        embed.set_thumbnail("https://raw.githubusercontent.com/purge-dev/clinicare/main/assets/moody.png")
-        embed.color = 0xFFA500
-        embed.set_footer("⚠ Consult your doctor if your symptoms worsen.")
         await ctx.send(embeds=embed, ephemeral=True)
-
-    elif (score >= 21 and score <= 30):
-        embed.description = "Your responses suggest **moderate clinical depression**. Consult a mental health professional soon to discuss ways going forward."
-        embed.set_thumbnail("https://raw.githubusercontent.com/purge-dev/clinicare/main/assets/borderline.png")
-        embed.color = 0xFF8C00
-        embed.set_footer("⚠ Consult your doctor if your symptoms worsen.")
-        await ctx.send(embeds=embed, ephemeral=True)
-
-    elif (score >= 31 and score <= 40):
-        embed.description = "Your responses suggest **severe clinical depression**. Consult a doctor or mental health professional soon to discuss ways going forward."
-        embed.set_thumbnail("https://raw.githubusercontent.com/purge-dev/clinicare/main/assets/severe.png")
-        embed.color = 0xFF0000
-        embed.set_footer("⚠ Visit the ER if you are considering self-harm or worse.")
-        await ctx.send(embeds=embed, ephemeral=True)
-
-    elif (score > 40):
-        embed.description = "Your responses suggest **extreme clinical depression**. Please visit an urgent care mental health clinic as this is likely impacting your overall health."
-        embed.set_thumbnail("https://raw.githubusercontent.com/purge-dev/clinicare/main/assets/severe.png")
-        embed.color = 0x8B0000
-        embed.set_footer("⚠ Visit the ER if you are considering self-harm or worse.")
-        await ctx.send(embeds=embed, ephemeral=True)
+                
+    await depression_res(score)
 
 client.start()
 
