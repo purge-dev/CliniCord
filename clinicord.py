@@ -1,7 +1,7 @@
 from interactions import Client, CommandContext, ComponentContext, Embed, SelectOption, SelectMenu, Emoji, ClientPresence, PresenceActivity, PresenceActivityType, StatusType
 import asyncio
 
-with open("pw.txt", "r") as file:
+with open("secrets/pw.txt", "r") as file:
     text = file.read()
 
 client = Client(token=text)
