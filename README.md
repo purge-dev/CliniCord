@@ -17,8 +17,8 @@ CliniCord is a Discord bot written using the [interactions-py](https://github.co
   
 * ### Lifestyle
   * Salt consumption tracking to explain risks on cardiovascular health using [meta-analysis](https://www.bmj.com/content/346/bmj.f1325) data
-  * Sugar consumption tracking and risk modelling
-  * User country-specific mortality prevention modelling based on salt/sugar reduction via [PRIME](https://apps.who.int/iris/handle/10665/346459)
+  * Sugar consumption tracking and personalized risk modelling
+
   
 ## ⚙ Usage
 <a href="https://discord.com/oauth2/authorize?client_id=1077949932524290110&permissions=2147534848&scope=bot"><img src="https://img.shields.io/static/v1?label=Invite%20Me&message=CliniCord%232260&plastic&color=5865F2&logo=discord"></a>
